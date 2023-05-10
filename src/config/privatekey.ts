@@ -1,0 +1,18 @@
+export const privatekey = {
+  keys: [
+    {
+      e: "AQAB",
+      n: "2DFuIf22-0r3hTmG1cFfEmQopQ63APpRMGMONcLh-KmnJXzsExnVsZwEBmYkST6ou9yz_o_P-SOHyy_vdhD3Abn59MjZNWNSu7mhf1kd0rBqC94jdj1sJzIz59xI5-UrJdoxvVGW9zDYrxUSdQGPGsCCbJ9ocW4v3oz4togEz8T2sti8WSS9ScEXsp8jgEeNWmuFKa7Nnuk6qTJVv8Fasy0IGENNV97GmVVR8T-5BuNfmg9QYhb8SeDXsafdsowIXvwLySSXP2QBhMZJNsMDW2NUgC-KnkahiG22igTEP8tjXWFH8A_UF-rnEQLpW9jgqIJI9TvjFtBoOirSBpOrow",
+      d: "YVjwpHGgIUtCZUTgCARIkPl0q84SbWhJgqY30dFs-xE5aFH14yvw40bDMTZxBGIojF721ZtgJGjxTnbJNrqw3qAlgymlVLrimBEgPT2dhi9VsP5XrXg-6O9cG_0-_txcL3EukHbaqXffOgcdBn6rN3qTv-GPn_PjriyAGYDp2budFIKb_AI-uG3KikxHmWjyN3Z3I4aJIcfVZmcYIEUl1m_KGLmSQLb4LHcBa501icn5CTT1nyQTmZlzz7Obis-d-AM-bUcRGz7SalOKZMMA524nqs3AaKKHYPIwt-2hkVtiJ0lOgsxG2oXLVED2y935vWi5U2iJhGOE01cON_Wu8Q",
+      p: "676ThuWmqZ6SQ8ghIMe2FAcn_JXJVx7aoAq8DytpNYzt7CwSfpg-VO1WECwN4lYQ_apiDf_lNBgYV9JTd5qtvomG_1IbK0HgN-_UDLDJ7fwPtBueQr45aa7ysk6t2-AXH7jFnyg2yayO8bPwXQvvgfb5rIOf97l1i1e_kRQ_SI0",
+      q: "6sTNpTKMnB75BFJlApW5gPSqWD2VKUFLJTn7zA8Vumpdtb5jr9QJght2AGy0Ntp3VvX1IiV0XXWzE8n1nz2cqevur6M_xrYEDy4lxvTuiZ0roAmbMckFHZYLbIWcrTgNEOfYG8-Ce_xh9n2rsBkdCrCcLPOClI3oowydhUeWsO8",
+      dp: "qllLB3ZZSUZRkPNDpQlLNAu7xFSEahTcjDtVi2ymGNEed8OdFadzmzDpOMRsv_nLS1Hcixs3h75FkOhl8g5usDl2uHafNVHj8Oe3hfgV4od63X37jWUh3ZFSxLAAB9tVOlHtU8XeWTr9DAEnlkTyrCpIXnW6mWqFWsxsnCxSUl0",
+      dq: "zsCLKtUdp9BPFVNKyb_6ImtWKWfymOZ7u0kZS1htlkJeTNRjDlH6Ha75eN5Cx5wWRWtOesfpdvVUxDS0L40fDzZMejmWzPU3FfdaJaFHAcJ8zPAo0OtrqeaeIPB6TsJyH1VOqQ9SpsZZr651KRy0ytlGcP_zG8jt-8n8X4fwWdk",
+      qi: "BO0fCS3EyU1oZHPmLoMJ9FWyhUlo9cfEh5ED_i2_5ZVLRzvfDcK5TiA5M6kVcEX6uNY-fJ7T3B2KbML2sHRtz5HWMtJ84pgJmKKHZG4vxhRHZV-VVVCGhSBe_GYf7MQfD6hsONHDNOt1FpxsekM-Z-mnLjiV7uwFtABGXALzwVQ",
+      kty: "RSA",
+      kid: "DOY7oy2vb1zwX391Ff0ka1901H2MHF2nUwYZ11fzevI",
+      alg: "RS256",
+      use: "sig",
+    },
+  ],
+};
