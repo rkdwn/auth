@@ -5,10 +5,8 @@ import Provider, {
   KoaContextWithOIDC,
 } from "oidc-provider";
 
-import { privatekey } from "./privatekey";
 import { clients } from "@/config/clients";
-import fs from "fs";
-import path from "path";
+import { privatekey } from "./privatekey";
 
 const providerConfigs: Configuration = {
   clients: clients,
@@ -269,7 +267,6 @@ async function extraTokenClaims(
     if (token.clientId === "rkdwn") {
       return {
         verifier: "test",
-        issuerId: "Clever",
         test: "testClaim",
       };
     }

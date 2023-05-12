@@ -1,30 +1,57 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import cors from "cors";
+import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
+import Provider from "oidc-provider";
+import url from "url";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { TestMiddleware } from "./common/testMiddleware";
 import configuration from "./config/configuration";
-import { OidcModule } from "./oidc/oidc.module";
-import express, { NextFunction, Request, Response } from "express";
-import url from "url";
+import providerConfigs from "./config/oidc-config";
+import { RouterModule } from "@nestjs/core";
+import { InteractionModule } from "./modules/interaction/interaction.module";
 
 @Module({
   imports: [
-    OidcModule,
+    // OidcModule,
+    RouterModule.register([
+      {
+        path: "interaction",
+        module: InteractionModule,
+      },
+    ]),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: "OIDC_PROVIDER",
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const provider = new Provider(configService.get("authURL"), {
+          ...providerConfigs,
+        });
+        provider.proxy = true;
+        provider.on("userinfo.error", (ctx, error) => {
+          console.error(
+            `🔥 [UserInfo error] : current-context = ${JSON.stringify(
+              ctx,
+            )} ${JSON.stringify(error)}`,
+          );
+        });
+        return provider;
+      },
+    },
+    AppService,
+  ],
 })
 export class AppModule implements NestModule {
-  constructor(private readonly configService: ConfigService) {
-    console.log(this.configService);
-  }
+  constructor(private readonly configService: ConfigService) {}
   configure(consumer: MiddlewareConsumer) {
     const corsOptions = this.configService.get("corsOptions");
     const staticPath = this.configService.get("staticPath");

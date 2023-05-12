@@ -9,6 +9,7 @@
   },
   "scripts": {
     "prebuild": "rimraf build",
+    "config:local": "cp -av envs/local.env .env",
     "config:develop": "cp -av envs/develop.env .env",
     "config:deploy": "cp -av envs/deploy.env .env",
     "build:version": "node src/utils/genBuildVersion.js",
