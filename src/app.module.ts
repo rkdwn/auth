@@ -33,9 +33,12 @@ import { InteractionModule } from "./modules/interaction/interaction.module";
       provide: "OIDC_PROVIDER",
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const provider = new Provider(configService.get("authURL"), {
-          ...providerConfigs,
-        });
+        const provider = new Provider(
+          `${configService.get("authURL")}:${configService.get("authPort")}`,
+          {
+            ...providerConfigs,
+          },
+        );
         provider.proxy = true;
         provider.on("userinfo.error", (ctx, error) => {
           console.error(
