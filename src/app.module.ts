@@ -1,24 +1,24 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { RouterModule } from "@nestjs/core";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
-import Provider from "oidc-provider";
 import url from "url";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { TestMiddleware } from "./common/testMiddleware";
 import configuration from "./config/configuration";
-import providerConfigs from "./config/oidc-config";
-import { RouterModule } from "@nestjs/core";
 import { InteractionModule } from "./modules/interaction/interaction.module";
+import { OidcModule } from "./modules/oidc/oidc.module";
 
 @Module({
   imports: [
-    // OidcModule,
+    InteractionModule,
+    OidcModule,
     RouterModule.register([
       {
-        path: "interaction",
+        path: "/interaction",
         module: InteractionModule,
       },
     ]),
@@ -28,30 +28,7 @@ import { InteractionModule } from "./modules/interaction/interaction.module";
     }),
   ],
   controllers: [AppController],
-  providers: [
-    {
-      provide: "OIDC_PROVIDER",
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        const provider = new Provider(
-          `${configService.get("authURL")}:${configService.get("authPort")}`,
-          {
-            ...providerConfigs,
-          },
-        );
-        provider.proxy = true;
-        provider.on("userinfo.error", (ctx, error) => {
-          console.error(
-            `🔥 [UserInfo error] : current-context = ${JSON.stringify(
-              ctx,
-            )} ${JSON.stringify(error)}`,
-          );
-        });
-        return provider;
-      },
-    },
-    AppService,
-  ],
+  providers: [AppService],
 })
 export class AppModule implements NestModule {
   constructor(private readonly configService: ConfigService) {}

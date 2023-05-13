@@ -1,15 +1,9 @@
-import { All, Controller, Get, Inject, Req, Res } from "@nestjs/common";
-import { Request, Response } from "express";
-import Provider from "oidc-provider";
+import { Controller, Get } from "@nestjs/common";
 import { AppService } from "./app.service";
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    @Inject("OIDC_PROVIDER")
-    private readonly provider: Provider,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get("/version.json")
   public version() {
@@ -18,14 +12,8 @@ export class AppController {
     };
   }
 
-  // @All("/*")
-  // public mountOidc(
-  //   @Req()
-  //   req: Request,
-  //   @Res()
-  //   res: Response,
-  // ): Promise<void> {
-  //   const callback = this.provider.callback();
-  //   return callback(req, res);
-  // }
+  @Get("/test")
+  public getHello(): string {
+    return this.appService.getHello();
+  }
 }
