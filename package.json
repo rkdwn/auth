@@ -32,7 +32,7 @@
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^8.0.0",
-    "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/platform-express": "^9.4.0",
     "cors": "^2.8.5",
     "helmet": "^7.0.0",
     "module-alias": "^2.2.2",

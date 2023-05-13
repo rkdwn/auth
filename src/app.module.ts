@@ -31,41 +31,7 @@ import { OidcModule } from "./modules/oidc/oidc.module";
   providers: [AppService],
 })
 export class AppModule implements NestModule {
-  constructor(private readonly configService: ConfigService) {}
   configure(consumer: MiddlewareConsumer) {
-    const corsOptions = this.configService.get("corsOptions");
-    const staticPath = this.configService.get("staticPath");
-    const isProd = this.configService.get("isProd");
-
     consumer.apply(TestMiddleware).forRoutes("*");
-    consumer.apply(
-      express.static(staticPath),
-      cors(corsOptions),
-      helmet({ frameguard: false }),
-      express.urlencoded({ extended: true }),
-      express.json(),
-    );
-
-    // inforce HTTPS on prod level
-    if (isProd) {
-      consumer.apply((req: Request, res: Response, next: NextFunction) => {
-        if (req.secure) {
-          next();
-        } else if (req.method === "GET" || req.method === "HEAD") {
-          res.redirect(
-            url.format({
-              protocol: "https",
-              host: req.get("host"),
-              pathname: req.originalUrl,
-            }),
-          );
-        } else {
-          res.status(400).json({
-            error: "invalid_request",
-            error_description: "do yourself a favor and only use https",
-          });
-        }
-      });
-    }
   }
 }

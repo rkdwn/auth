@@ -1,10 +1,11 @@
 import providerConfigs from "@/config/oidc-config";
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import Provider from "oidc-provider";
 import { OidcController } from "./oidc.controller";
 import { OidcService } from "./oidc.service";
 
+@Global()
 @Module({
   imports: [],
   exports: [OidcService],
