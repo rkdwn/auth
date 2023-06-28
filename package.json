@@ -14,7 +14,7 @@
     "config:deploy": "cp -av envs/deploy.env .env",
     "build:version": "node src/utils/genBuildVersion.js",
     "build:compile": "nest build",
-    "build": "run-s build:version build:compile",
+    "build": "run-s build:compile",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
