@@ -2,9 +2,10 @@ import { Injectable, NestMiddleware } from "@nestjs/common";
 import { NextFunction, Request, Response } from "express";
 
 @Injectable()
-export class TestMiddleware implements NestMiddleware {
+export class SetNoCacheMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    console.log("TestMiddleware");
+    res.set("Pragma", "no-cache");
+    res.set("Cache-Control", "no-cache, no-store");
     next();
   }
 }

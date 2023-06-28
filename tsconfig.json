@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
+    "typeRoots": ["./node_modules/@types", "./src/interfaces"],
     "moduleResolution": "node",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    // "allowJs": true,
     "resolveJsonModule": true,
     "target": "ESNext",
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "./build",
     "baseUrl": ".",
     "incremental": true,

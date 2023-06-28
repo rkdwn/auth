@@ -20,8 +20,9 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   app.set("trust proxy", true);
-  app.set("view engine", configService.get("viewEngine"));
-  app.set("views", configService.get("viewPath"));
+  app.setViewEngine(configService.get("viewEngine"));
+  app.setBaseViewsDir(configService.get("viewPath"));
+  app.useStaticAssets(configService.get("staticPath"));
 
   app.use(cors(configService.get("corsOptions")));
   // app.use(express.urlencoded({ extended: true }));

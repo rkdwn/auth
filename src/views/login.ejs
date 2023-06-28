@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- BootStrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <title>Sign-in</title>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,100);
+      h1 {
+        margin-top: 20px;
+      }
+      body {
+        background-color: #407088;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .direction {
+        direction: rtl;
+      }
+      .form-control:focus {
+        border-color: #ffcbcb;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+          0 0 5px rgba(51, 107, 88, 0.555);
+      }
+      .focus-error {
+        border-color: red;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+          0 0 8px rgba(255, 0, 0, 0.6);
+      }
+      .login-card {
+        padding: 40px 32px;
+        padding-top: 0px;
+        padding-bottom: 10px;
+        width: 400px;
+        background-color: #f7f7f7;
+        margin: 0 auto 10px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+      .overflow {
+        color: red;
+      }
+      .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .btn-common {
+        height: 45px;
+        align-items: center;
+      }
+      .btn-login {
+        display: flex;
+        background-color: #ffb5b5;
+        color: #878787;
+      }
+      .btn-login:hover {
+        filter: brightness(95%);
+        color: #878787;
+      }
+      .btn-goBack {
+        display: flex;
+        background-color: white;
+        color: #878787;
+        border: 1px solid #b0bec5;
+      }
+      .btn-goBack:hover {
+        filter: brightness(95%);
+        color: #878787;
+      }
+
+      .btn-text {
+        text-decoration: none;
+        width: 100%;
+        text-align: center;
+      }
+
+      .login-help {
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+      }
+
+      .select-box {
+        text-align: center;
+        padding: 4px;
+        background-color: #007666;
+        border: none;
+        width: 100px;
+        height: 32px;
+        appearance: none;
+        background-image: url("/ArrowDown.svg");
+        background-repeat: no-repeat;
+        background-position: calc(100% - 3px) center;
+        color: white;
+      }
+
+      .glyphicon {
+        position: absolute;
+        cursor: pointer;
+        right: 5px;
+        top: calc(50% - 17px);
+        padding: 4px;
+        /* padding: 7px 7px; */
+        z-index: 100;
+        color: rgba(0, 0, 0, 0.52);
+        border-radius: 100% !important;
+      }
+      .glyphicon:hover {
+        background-color: rgba(0, 0, 0, 0.16);
+      }
+    </style>
+  </head>
+  <script src="/bootstrap/bootstrap.min.js" type="application/json"></script>
+  <script>
+    // http://localhost:8888/auth?client_id=6fe5d1b6708dce26e989&response_type=code&redirect_uri=https://cvboard.dev2.vnclever.com/auth&scope=openid+profile+hospitalInfo&code_challenge=CUZX5qE8Wvye6kS_SasIsa8MMxacJftmWdsIA_iKp3I&code_challenge_method=S256
+    // 괄호 등 특수문자를 찾는 정규표현식
+    const REG_FIND_SPECIAL_CHAR = /([\.$?*|{}\(\)\[\]\\\/\+^])/g;
+    window.onload = function () {
+      try {
+        const flashText = "<%- flash %>";
+        // ###################################
+        document.getElementById("login-title").innerHTML = "Login";
+        document.getElementById("label-userId").innerHTML = "User ID";
+        document.getElementById("label-password").innerHTML = "Password";
+        document.getElementById("label-rememberUser").innerHTML =
+          "Rememeber UserInfo";
+        document.getElementById("loginBtn-text").innerHTML = "Login";
+        document.getElementById("goBackBtn-text").innerHTML = "Go back";
+        document.getElementById("resetPassTitle").innerHTML = "Reset Password";
+
+        if (flashText) {
+          document.getElementById("flash-text").innerHTML = flashText;
+        }
+
+        // ###################################
+
+        let baseUrl = "<%- params.redirect_uri %>";
+
+        localStorage.removeItem("baseUrl");
+        localStorage.setItem("baseUrl", baseUrl);
+
+        let client = "<%- client.clientId %>";
+        let errorField = "<%- errorField %>";
+        let bodyClass = document.getElementsByTagName("body")[0];
+
+        // console.log(">>>>>",client);
+
+        let hospitalInput = document.getElementById("hospital");
+        let userIdInput = document.getElementById("userID");
+        let passwordInput = document.getElementById("passwordInput");
+
+        // Indicate when login error
+        if (errorField === "clinic") {
+          hospitalInput.blur();
+          hospitalInput.classList.add("focus-error");
+        }
+        if (errorField === "userid") {
+          userIdInput.classList.add("focus-error");
+        }
+        if (errorField === "password") {
+          passwordInput.classList.add("focus-error");
+        }
+
+        var userId = localStorage.getItem("userId");
+        if (userId) {
+          document.getElementById("userID").value = userId;
+          document.getElementById("rememberUserID").checked = true;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    function getCookie(name) {
+      let matches = document.cookie.match(
+        new RegExp(
+          "(?:^|; )" + name.replace(REG_FIND_SPECIAL_CHAR, "\\$1") + "=([^;]*)",
+        ),
+      );
+      return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    function saveStorage() {
+      var saveUser = document.getElementById("rememberUserID").checked;
+      if (saveUser) {
+        localStorage.setItem("userId", document.getElementById("userID").value);
+      } else {
+        localStorage.setItem("userId", "");
+      }
+    }
+    // Reveal password
+    function flip() {
+      const password = document.getElementById("passwordInput");
+      const svg = document.getElementById("svg-icon");
+
+      if (password.getAttribute("type") === "password") {
+        svg.innerHTML = `<path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
+        <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>`;
+        password.setAttribute("type", "text");
+      } else {
+        svg.innerHTML = `<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>`;
+        password.setAttribute("type", "password");
+      }
+    }
+  </script>
+  <body>
+    <div class="login-card">
+      <h1 id="login-title"></h1>
+      <form
+        autocomplete="off"
+        action="/interaction/<%- uid %>/login"
+        method="post"
+      >
+        <!-- USER ID -->
+        <div class="mb-3">
+          <label for="userID" class="form-label" id="label-userId"></label>
+          <input
+            required
+            type="text"
+            class="form-control"
+            name="userId"
+            id="userID"
+            placeholder=""
+          />
+        </div>
+        <!-- PASSWORD -->
+        <label for="passwordInput" class="form-label" id="label-password">
+        </label>
+        <div class="input-group mb-3">
+          <input
+            required
+            type="password"
+            class="form-control"
+            name="password"
+            id="passwordInput"
+            placeholder=""
+          />
+          <span class="glyphicon" onclick="flip()" id="glyphicon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              class="bi bi-eye-fill"
+              viewBox="0 0 16 16"
+              id="svg-icon"
+            >
+              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+              <path
+                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+              />
+            </svg>
+          </span>
+        </div>
+        <!-- CHECKBOX -->
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="rememberUserID"
+            name="rememberUserID"
+          />
+          <label
+            class="form-check-label"
+            for="rememberUserID"
+            id="label-rememberUser"
+          >
+          </label>
+        </div>
+        <hr />
+        <!-- ERROR MESSAGE -->
+        <p class="overflow" id="flash-text"></p>
+        <!-- BUTTONS -->
+        <div class="button-group">
+          <div>
+            <button
+              type="submit"
+              style="width: 100%"
+              class="btn btn-login btn-common"
+              onclick="saveStorage()"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                class="bi bi-arrow-right-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"
+                />
+              </svg>
+              <span class="btn-text" id="loginBtn-text"></span>
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              style="width: 100%"
+              class="btn btn-goBack btn-common"
+              onclick="window.location.href='/interaction/<%- uid %>/abort'"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                class="bi bi-chevron-left"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+                />
+              </svg>
+              <span class="btn-text" id="goBackBtn-text"></span>
+            </button>
+          </div>
+        </div>
+        <br />
+        <!-- RESET PASSWORD -->
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.38);
+          "
+        >
+          <a href="/interaction/<%- uid %>/reset" id="resetPassTitle"> </a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

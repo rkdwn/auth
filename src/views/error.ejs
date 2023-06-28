@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- BootStrap -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/bootstrap/bootstrap.min.css"
+    />
+    <title>Error - Session not found</title>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,100);
+      body {
+        background-color: #407088;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      h1 {
+        margin-top: 20px;
+        font-size: 36px;
+      }
+      .direction {
+        direction: rtl;
+      }
+      .error-card {
+        padding: 32px 28px;
+        padding-bottom: 10px;
+        width: 500px;
+        background-color: #ffcbcb;
+        margin: 0 auto 10px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+      .button-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+      }
+      .btn-goBack {
+        border: "none";
+        color: #f50057;
+        background-color: rgba(255, 255, 255, 0);
+      }
+      .btn-goBack:hover {
+        background-color: rgba(0, 0, 0, 0.16);
+        color: #f50057;
+      }
+    </style>
+  </head>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+    crossorigin="anonymous"
+  />
+  <script>
+    window.onload = function () {
+      // ###################################
+      document.getElementById("sessionErrorTitle").innerHTML =
+        "SessionNotFound";
+      document.getElementById("sessionErrorMsg").innerHTML =
+        "your session has missed. Please try again.";
+      document.getElementById("confirmBtn-text").innerHTML = "Go Back";
+
+      // ###################################
+    };
+
+    function redirectIntro() {
+      console.log(localStorage.getItem("baseUrl"));
+      window.location.href = localStorage.getItem("baseUrl");
+    }
+  </script>
+  <body>
+    <div class="error-card">
+      <h1 id="sessionErrorTitle"></h1>
+      <div>
+        <p id="sessionErrorMsg"></p>
+      </div>
+      <div class="button-group">
+        <button
+          class="btn btn-goBack mb-3"
+          onclick="redirectIntro()"
+          id="confirmBtn-text"
+        ></button>
+      </div>
+    </div>
+  </body>
+</html>

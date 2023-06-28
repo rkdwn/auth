@@ -2,7 +2,8 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class InteractionService {
-  getHello(): string {
-    return "Hello World!";
+  constructor() {}
+  async getHello(): Promise<string> {
+    return "hello";
   }
 }

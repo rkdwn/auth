@@ -19,7 +19,7 @@ const TestClients: ClientMetadata[] = [
       "http://localhost:3001/logout",
       "http://localhost:3002/logout",
     ],
-    scope: "openid profile hospitalInfo",
+    scope: "openid profile",
     token_endpoint_auth_method: "client_secret_basic",
     backchannel_logout_uri: "http://localhost:3001/backchannel_logout",
   },
