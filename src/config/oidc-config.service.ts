@@ -157,7 +157,7 @@ export class OidcConfigs {
 
           // test
           if (client.clientId === "rkdwn") {
-            return 365 * 30 * 24 * 60 * 60; /* 1 year */
+            return 24 * 60 * 60; /* 24 hours */
           }
 
           // default TTL
