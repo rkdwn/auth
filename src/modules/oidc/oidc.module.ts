@@ -2,7 +2,8 @@ import { OidcConfigs } from "@/config/oidc-config.service";
 import { Global, Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
-import Provider from "oidc-provider";
+import { AccountModule } from "../account/account.module";
+import { AccountService } from "../account/account.service";
 import { AccessToken, AccessTokenSchema } from "./entity/AccessToken.entity";
 import {
   AuthorizationCode,
@@ -36,8 +37,6 @@ import {
 import { Session, SessionSchema } from "./entity/Session.entity";
 import { OidcController } from "./oidc.controller";
 import { OidcService } from "./oidc.service";
-import { AccountService } from "../account/account.service";
-import { AccountModule } from "../account/account.module";
 
 @Global()
 @Module({
@@ -123,15 +122,13 @@ import { AccountModule } from "../account/account.module";
         accountService: AccountService,
       ) => {
         const adapterFactory = oidcConfigs.createAdapterFactory();
-        const provider = new Provider(
-          `${configService.get("authURL")}:${configService.get("authPort")}`,
-          {
-            ...oidcConfigs.getConfigurations(),
-            adapter: adapterFactory,
-            findAccount: (ctx, sub, token) =>
-              accountService.findAccount(ctx, sub, token),
-          },
-        );
+        const Provider = await require("oidc-provider");
+
+        const provider = new Provider(`${configService.get("AUTH_URL")}`, {
+          ...oidcConfigs.getConfigurations(),
+          adapter: adapterFactory,
+          findAccount: accountService.findAccount,
+        });
         provider.proxy = true;
         provider.on("userinfo.error", (ctx, error) => {
           console.error(

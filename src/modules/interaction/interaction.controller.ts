@@ -1,3 +1,4 @@
+import { RenderProps } from "@/interfaces";
 import {
   All,
   Controller,
@@ -8,16 +9,13 @@ import {
   Req,
   Res,
 } from "@nestjs/common";
-import { InteractionService } from "./interaction.service";
 import { NextFunction, Request, Response } from "express";
 import Provider, { InteractionResults, errors } from "oidc-provider";
-import { RenderProps } from "@/interfaces";
 import {
   AccountService,
-  CheckAccountRetType,
   isCheckAccountRetType,
 } from "../account/account.service";
-import { User } from "../user/user.entity";
+import { InteractionService } from "./interaction.service";
 
 @Controller()
 export class InteractionController {
