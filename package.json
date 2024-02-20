@@ -9,7 +9,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prebuild": "rimraf build",
-    "deploy:version": "node src/utils/genBuildVersion.js",
+    "version": "node src/utils/genBuildVersion.js",
     "deploy:config": "cp -av envs/deploy.env .env",
     "deploy:compile": "nest build",
     "deploy:build": "pnpm run -r '/^deploy:*/'",
