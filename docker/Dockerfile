@@ -1,5 +1,5 @@
 # STAGE 1: install
-FROM docker.io/node:lts-alpine AS base
+FROM docker.io/node:lts-slim AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -14,13 +14,13 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 
 # STAGE 2: build
 FROM base AS build
-RUN apk add git
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm deploy:build
+RUN pnpm run build
 
 # STAGE 3: app
 FROM base
 COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app/build /app/build
+COPY --from=build /app/.env /app/.env
 
-CMD [ "pnpm", "start" ]
+CMD [ "node", "build/main" ]

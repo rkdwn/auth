@@ -5,6 +5,7 @@
     "webpack": false,
     "deleteOutputPath": true,
     "assets": ["**/*.ejs", "static/**/*"],
-    "watchAssets": true
+    "watchAssets": true,
+    "typeCheck": true
   }
 }

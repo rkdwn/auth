@@ -1,4 +1,4 @@
-import { OidcConfigs } from "@/config/oidc-config.service";
+import { OidcConfigs } from "../../config/oidc-config.service";
 import { Global, Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";

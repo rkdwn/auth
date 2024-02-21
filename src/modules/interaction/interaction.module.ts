@@ -1,4 +1,4 @@
-import { SetNoCacheMiddleware } from "@/common/middleware/setNoCacheMiddleware";
+import { SetNoCacheMiddleware } from "../../common/middleware/setNoCacheMiddleware";
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { AccountModule } from "../account/account.module";
 import { OidcModule } from "../oidc/oidc.module";

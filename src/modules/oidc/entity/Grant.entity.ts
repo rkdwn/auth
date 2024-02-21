@@ -1,4 +1,4 @@
-import { BaseAdapterEntity } from "@/common/base.adapter.entity";
+import { BaseAdapterEntity } from "../../../common/base.adapter.entity";
 import { SchemaFactory } from "@nestjs/mongoose";
 
 export type GrantDocument = Grant & Document;

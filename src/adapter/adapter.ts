@@ -1,4 +1,4 @@
-import { BaseAdapterEntityDocument } from "@/common/base.adapter.entity";
+import { BaseAdapterEntityDocument } from "../common/base.adapter.entity";
 import { Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
 import { Adapter, AdapterPayload } from "oidc-provider";

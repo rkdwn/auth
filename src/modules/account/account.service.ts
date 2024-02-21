@@ -1,4 +1,4 @@
-import { compare } from "@/utils/password";
+import { compare } from "../../utils/password";
 import { Injectable } from "@nestjs/common";
 import Provider, { Account, KoaContextWithOIDC } from "oidc-provider";
 import { User } from "../user/user.entity";

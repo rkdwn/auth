@@ -1,11 +1,3 @@
-// We need this in order to use @Decorators in import statements
-import moduleAlias from "module-alias";
-moduleAlias.addAlias("@", __dirname);
-import "reflect-metadata";
-
-/**
- * Main Loop here.
- */
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";

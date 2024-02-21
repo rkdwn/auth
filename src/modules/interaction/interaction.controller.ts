@@ -1,4 +1,4 @@
-import { RenderProps } from "@/interfaces";
+import { RenderProps } from "../../interfaces";
 import {
   All,
   Controller,

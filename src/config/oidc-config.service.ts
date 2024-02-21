@@ -7,12 +7,12 @@ import Provider, {
   KoaContextWithOIDC,
 } from "oidc-provider";
 
-import { clients } from "@/config/clients";
+import { clients } from "./clients";
 import { privatekey } from "./privatekey";
 import { Injectable } from "@nestjs/common";
-import { CustomAdapter } from "@/adapter/adapter";
+import { CustomAdapter } from "../adapter/adapter";
 import { InjectModel } from "@nestjs/mongoose";
-import { BaseAdapterEntityDocument } from "@/common/base.adapter.entity";
+import { BaseAdapterEntityDocument } from "../common/base.adapter.entity";
 import { Model } from "mongoose";
 
 @Injectable()
